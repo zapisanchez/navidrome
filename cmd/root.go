@@ -103,9 +103,10 @@ func runNavidrome(ctx context.Context) {
 
 // mainContext returns a context that is cancelled when the process receives a signal to exit.
 func mainContext(ctx context.Context) (context.Context, context.CancelFunc) {
+	signal.Ignore(syscall.SIGHUP)
+
 	return signal.NotifyContext(ctx,
 		os.Interrupt,
-		syscall.SIGHUP,
 		syscall.SIGTERM,
 		syscall.SIGABRT,
 	)
